@@ -68,7 +68,8 @@ export default class ESI {
 
     this.#postRequest = bent(this.endpoint, 'json', 'POST', {
       Host: hostname,
-      'User-Agent': this.userAgent
+      'User-Agent': this.userAgent,
+      'Content-Type': 'application/x-www-form-urlencoded'
     }, 200, 201)
   }
 
