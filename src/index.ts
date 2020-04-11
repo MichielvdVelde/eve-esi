@@ -73,7 +73,7 @@ export default class ESI {
     }, 200, 201)
   }
 
-  public async makeGetRequest<T> (
+  public async makeAuthenticatedGetRequest<T> (
     uri: string,
     query?: { [key: string]: any }
   ): Promise<T> {
@@ -85,10 +85,10 @@ export default class ESI {
 
     return this.#getRequest(uri, null, {
       Authorization: `Bearer ${this.#accessToken}`
-    }) as unknown as T
+    }) as unknown as Promise<T>
   }
 
-  public async makePostRequest<T> (
+  public async makeAuthenticatedPostRequest<T> (
     uri: string,
     payload: { [key: string]: any },
     query?: { [key: string]: any }
@@ -101,7 +101,7 @@ export default class ESI {
 
     return this.#postRequest(uri, formUrlencoded(payload), {
       Authorization: `Bearer ${this.#accessToken}`
-    }) as unknown as T
+    }) as unknown as Promise<T>
   }
 
   private async checkAccessToken (): Promise<void> {
