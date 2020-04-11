@@ -93,7 +93,7 @@ router.get('/assets', async ctx => {
   }
 
   // Make an authenticated GET request to ESI
-  const reply = await esi.makeGetRequest<any>(
+  const reply = await esi.makeAuthenticatedGetRequest<any>(
     `/characters/${characterId}/assets/`
   )
 
