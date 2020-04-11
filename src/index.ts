@@ -148,7 +148,7 @@ export default class ESI {
       refreshAccessToken = true
     } else {
       const { exp } = this.#accessTokenPayload
-      refreshAccessToken = new Date().getTime() > exp
+      refreshAccessToken = Math.ceil(new Date().getTime() / 1000) > exp
     }
 
     if (refreshAccessToken) {
