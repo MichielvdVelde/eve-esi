@@ -10,6 +10,18 @@ import formUrlencoded from 'form-urlencoded'
 
 const { name, version, homepage } = require('../package')
 
+export interface AccessTokenPayload {
+  scp: string[],
+  jti: string,
+  kid: string,
+  sub: string,
+  azp: string,
+  name: string,
+  owner: string,
+  exp: number,
+  iss: string
+}
+
 export interface ESITokens {
   refreshToken: string,
   accessToken?: string
@@ -30,6 +42,7 @@ export default class ESI {
   public readonly endpoint: string
 
   #accessToken?: string
+  #accessTokenPayload?: AccessTokenPayload
   #refreshToken: string
 
   private updateRefreshToken: (
@@ -50,6 +63,7 @@ export default class ESI {
 
     if (tokens.accessToken) {
       this.#accessToken = tokens.accessToken
+      this.#accessTokenPayload = jwt.decode(tokens.accessToken) as AccessTokenPayload
     }
 
     this.endpoint = opts.endpoint || 'https://esi.evetech.net/latest'
@@ -133,13 +147,14 @@ export default class ESI {
     if (!this.#accessToken) {
       refreshAccessToken = true
     } else {
-      const { exp } = jwt.decode(this.#accessToken) as { exp: number }
+      const { exp } = this.#accessTokenPayload
       refreshAccessToken = new Date().getTime() > exp
     }
 
     if (refreshAccessToken) {
       const reply = await this.sso.getAccessToken(this.#refreshToken, true)
       this.#accessToken = reply.access_token
+      this.#accessTokenPayload = jwt.decode(reply.access_token) as AccessTokenPayload
 
       if (this.#refreshToken !== reply.refresh_token) {
         if (this.updateRefreshToken) {
