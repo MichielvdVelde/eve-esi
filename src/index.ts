@@ -88,6 +88,17 @@ export default class ESI {
     }) as unknown as Promise<T>
   }
 
+  public async makeUnauthenticatedGetRequest<T> (
+    uri: string,
+    query: { [key: string]: any }
+  ): Promise<T> {
+    if (query) {
+      uri = `${uri}?${stringify(query)}`
+    }
+
+    return this.#getRequest(uri) as unknown as Promise<T>
+  }
+
   public async makeAuthenticatedPostRequest<T> (
     uri: string,
     payload: { [key: string]: any },
@@ -102,6 +113,18 @@ export default class ESI {
     return this.#postRequest(uri, formUrlencoded(payload), {
       Authorization: `Bearer ${this.#accessToken}`
     }) as unknown as Promise<T>
+  }
+
+  public async makeUnauthenticatedPostRequest<T> (
+    uri: string,
+    payload: { [key: string]: any },
+    query?: { [key: string]: any }
+  ): Promise<T> {
+    if (query) {
+      uri = `${uri}?${stringify(query)}`
+    }
+
+    return this.#postRequest(uri, formUrlencoded(payload)) as unknown as Promise<T>
   }
 
   private async checkAccessToken (): Promise<void> {
