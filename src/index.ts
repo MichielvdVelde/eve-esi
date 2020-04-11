@@ -87,7 +87,7 @@ export default class ESI {
     }, 200, 201)
   }
 
-  public async makeAuthenticatedGetRequest<T> (
+  public async makeAuthenticatedGetRequest<T = { [key: string]: any }> (
     uri: string,
     query?: { [key: string]: any }
   ): Promise<T> {
@@ -102,7 +102,7 @@ export default class ESI {
     }) as unknown as Promise<T>
   }
 
-  public async makeUnauthenticatedGetRequest<T> (
+  public async makeUnauthenticatedGetRequest<T = { [key: string]: any }> (
     uri: string,
     query: { [key: string]: any }
   ): Promise<T> {
@@ -113,7 +113,7 @@ export default class ESI {
     return this.#getRequest(uri) as unknown as Promise<T>
   }
 
-  public async makeAuthenticatedPostRequest<T> (
+  public async makeAuthenticatedPostRequest<T = { [key: string]: any }> (
     uri: string,
     payload: { [key: string]: any },
     query?: { [key: string]: any }
@@ -129,7 +129,7 @@ export default class ESI {
     }) as unknown as Promise<T>
   }
 
-  public async makeUnauthenticatedPostRequest<T> (
+  public async makeUnauthenticatedPostRequest<T = { [key: string]: any }> (
     uri: string,
     payload: { [key: string]: any },
     query?: { [key: string]: any }
