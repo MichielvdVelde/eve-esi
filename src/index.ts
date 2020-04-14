@@ -113,7 +113,7 @@ export default class ESI {
       uri = `${uri}?${stringify(query)}`
     }
 
-    return this.#getRequest(uri, headers) as unknown as Promise<T>
+    return this.#getRequest(uri, null, headers) as unknown as Promise<T>
   }
 
   public async makeAuthenticatedPostRequest<T = { [key: string]: any }> (
