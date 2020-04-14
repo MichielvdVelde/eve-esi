@@ -89,7 +89,8 @@ export default class ESI {
 
   public async makeAuthenticatedGetRequest<T = { [key: string]: any }> (
     uri: string,
-    query?: { [key: string]: any }
+    query?: { [key: string]: any },
+    headers: { [key: string]: any } = {}
   ): Promise<T> {
     await this.checkAccessToken()
 
@@ -98,25 +99,28 @@ export default class ESI {
     }
 
     return this.#getRequest(uri, null, {
+      ...headers,
       Authorization: `Bearer ${this.#accessToken}`
     }) as unknown as Promise<T>
   }
 
   public async makeUnauthenticatedGetRequest<T = { [key: string]: any }> (
     uri: string,
-    query: { [key: string]: any }
+    query: { [key: string]: any },
+    headers: { [key: string]: any } = {}
   ): Promise<T> {
     if (query) {
       uri = `${uri}?${stringify(query)}`
     }
 
-    return this.#getRequest(uri) as unknown as Promise<T>
+    return this.#getRequest(uri, headers) as unknown as Promise<T>
   }
 
   public async makeAuthenticatedPostRequest<T = { [key: string]: any }> (
     uri: string,
     payload: { [key: string]: any },
-    query?: { [key: string]: any }
+    query?: { [key: string]: any },
+    headers: { [key: string]: any } = {}
   ): Promise<T> {
     await this.checkAccessToken()
 
@@ -125,6 +129,7 @@ export default class ESI {
     }
 
     return this.#postRequest(uri, formUrlencoded(payload), {
+      ...headers,
       Authorization: `Bearer ${this.#accessToken}`
     }) as unknown as Promise<T>
   }
@@ -132,13 +137,14 @@ export default class ESI {
   public async makeUnauthenticatedPostRequest<T = { [key: string]: any }> (
     uri: string,
     payload: { [key: string]: any },
-    query?: { [key: string]: any }
+    query?: { [key: string]: any },
+    headers: { [key: string]: any } = {}
   ): Promise<T> {
     if (query) {
       uri = `${uri}?${stringify(query)}`
     }
 
-    return this.#postRequest(uri, formUrlencoded(payload)) as unknown as Promise<T>
+    return this.#postRequest(uri, formUrlencoded(payload), headers) as unknown as Promise<T>
   }
 
   private async checkAccessToken (): Promise<void> {
