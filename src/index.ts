@@ -8,6 +8,8 @@ import SingleSignOn from 'eve-sso'
 
 const { name, version, homepage } = require('../package')
 
+export type Response<T> = bent.NodeResponse & { json: () => Promise<T> }
+
 export interface Account {
   owner: string
 }
@@ -174,7 +176,7 @@ export default class ESI {
       token?: Token,
       sso?: SingleSignOn
     } = {}
-  ): Promise<bent.NodeResponse & { json: () => Promise<T> }> {
+  ): Promise<Response<T>> {
     const method = options.method || payload ? 'POST' : 'GET'
     // TODO: add default acceptable status codes for GET and POST/PUT requests
     const statusCodes = options.statusCodes || method === 'GET' ? [ 200 ] : [ 200, 201 ]
