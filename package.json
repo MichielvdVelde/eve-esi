@@ -1,10 +1,14 @@
 {
-  "name": "eve-esi",
+  "name": "eve-esi-client",
   "version": "0.0.1",
-  "private": true,
   "description": "Client for Eve Online ESI",
   "main": "./dist/index.js",
   "author": "Michiel van der Velde <michiel@michielvdvelde.nl>",
+  "homepage": "http://github.com/MichielvdVelde/eve-esi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichielvdVelde/eve-esi.git"
+  },
   "files": [
     "dist"
   ],
