@@ -7,8 +7,18 @@ and make authenticated and unauthenticated requests.
 
 Not published to npm yet. To use the module, clone the repository.
 
-This module makes use of my other Eve related module, [https://github.com/MichielvdVelde/eve-sso](eve-sso).
+This module makes use of my other Eve related module, [eve-sso](https://github.com/MichielvdVelde/eve-sso).
 Documentation is lacking, see the source code for guidance if you're brave enough to try it out.
+
+Before using the module you must create an application in the
+[Eve Online developers section](https://developers.eveonline.com/). This will
+give you the required client ID and secret.
+
+## Features
+
+* Manage accounts, characters, and tokens with an easy to extend interface
+* Make authenticated and unauthenticated requests to ESI
+* Automatically refreshes and updates tokens when necessary
 
 ## Example
 
