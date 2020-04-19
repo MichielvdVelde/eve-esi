@@ -1,23 +1,3 @@
-# Eve Online ESI Client
-
-***Very much a work-in-progress!***
-
-Node.js client for Eve Online ESI. Allows you to manage characters and tokens,
-and make authenticated and unauthenticated requests.
-
-Not published to npm yet. To use the module, clone the repository.
-
-This module makes use of my other Eve related module, [https://github.com/MichielvdVelde/eve-sso](eve-sso).
-Documentation is lacking, see the source code for guidance if you're brave enough to try it out.
-
-## Example
-
-This example shows how to authenticate a character and make a request.
-
-The accompanied memory provider is meant solely for development, you should not
-use it in production. It can also be used as a reference implementation.
-
-```ts
 'use strict'
 
 import ESI from './index'
@@ -66,7 +46,7 @@ router.get('/welcome/:characterId', async ctx => {
   const character = await provider.getCharacter(characterId)
   const token = await provider.getToken(characterId, 'esi-skills.read_skills.v1')
 
-  let body = `<h1>Welcome, ${character.characterName}!</h1>`
+  let body = `<p class="margin: 10px; font-size: 18px;">Welcome, ${character.characterName}!</p>`
 
   const skills = await esi.request<Skills>(
     `/characters/${characterId}/skills/`,
@@ -82,7 +62,7 @@ router.get('/welcome/:characterId', async ctx => {
   for (const skill of json.skills) {
     body += `<li>${skill.skill_id}: ${skill.active_skill_level}</li>`
   }
-  
+
   body += '</ul>'
 
   ctx.body = body
@@ -92,10 +72,3 @@ app.use(router.middleware())
 app.listen(3001, () => {
   console.log('- Server listening')
 })
-```
-
-## License
-
-Copyright 2020 Michiel van der Velde.
-
-This software is licensed under [the MIT License](LICENSE).

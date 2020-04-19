@@ -13,7 +13,10 @@
   },
   "keywords": [
     "eve",
-    "online"
+    "online",
+    "esi",
+    "client",
+    "sso"
   ],
   "license": "MIT",
   "devDependencies": {
@@ -24,8 +27,10 @@
   },
   "dependencies": {
     "bent": "^7.3.0",
-    "eve-sso": "0.0.6",
     "form-urlencoded": "^4.1.3",
     "jsonwebtoken": "^8.5.1"
+  },
+  "peerDepencencies": {
+    "eve-sso": "^1.1.0"
   }
 }
