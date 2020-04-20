@@ -206,7 +206,6 @@ export default class ESI {
       encodedPayload = formUrlencoded(payload)
 
       headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      headers['Content-Length'] = Buffer.byteLength(encodedPayload)
     }
 
     let uriWithQuery: string = null
