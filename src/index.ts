@@ -1,6 +1,7 @@
 'use strict'
 
 import { stringify } from 'querystring'
+import { PassThrough } from 'stream'
 
 import formUrlencoded from 'form-urlencoded'
 import bent from 'bent'
@@ -8,7 +9,14 @@ import SingleSignOn from 'eve-sso'
 
 const { name, version, homepage } = require('../package')
 
-export type Response<T> = bent.NodeResponse & { json: () => Promise<T> }
+export type Response<T> = PassThrough & {
+    statusCode: number
+    statusMessage: string
+    headers: {
+      [key: string]: any
+    },
+    json: () => Promise<T>
+}
 
 export interface Account {
   owner: string
