@@ -40,7 +40,7 @@ export interface Token {
   accessToken: string,
   refreshToken: string,
   expires: Date,
-  scopes: string[],
+  scopes?: string[],
 
   updateToken (
     accessToken: string,
