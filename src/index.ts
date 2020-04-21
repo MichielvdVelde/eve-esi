@@ -27,7 +27,7 @@ export interface Character {
   characterId: number,
   characterName: string,
 
-  update (
+  updateCharacter (
     owner: string,
     characterName: string
   ): Promise<this>,
@@ -42,7 +42,7 @@ export interface Token {
   expires: Date,
   scopes: string[],
 
-  update (
+  updateToken (
     accessToken: string,
     refreshToken: string,
     expires: Date,
@@ -142,7 +142,7 @@ export default class ESI {
         await character.deleteTokens()
       }
 
-      await character.update(
+      await character.updateCharacter(
         owner,
         name
       )
@@ -159,7 +159,7 @@ export default class ESI {
         scp && scp.length ? scp : null
       )
     } else {
-      await token.update(
+      await token.updateToken(
         access_token,
         refresh_token,
         new Date(Date.now() + (expires_in * 1000))
@@ -198,7 +198,7 @@ export default class ESI {
       if (token.expires.getTime() <= Date.now()) {
         const response = await (options.sso || this.sso).getAccessToken(token.refreshToken, true)
 
-        await token.update(
+        await token.updateToken(
           response.access_token,
           response.refresh_token,
           new Date (Date.now() + (response.expires_in * 1000))

@@ -85,7 +85,7 @@ export default class MemoryProvider implements Provider {
       characterName
     }
 
-    character.update = async (
+    character.updateCharacter = async (
       owner: string,
       characterName: string
     ) => {
@@ -126,7 +126,7 @@ export default class MemoryProvider implements Provider {
       scopes
     }
 
-    token.update = async (
+    token.updateToken = async (
       accessToken: string,
       refreshToken: string,
       expires: Date,
