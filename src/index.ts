@@ -9,7 +9,7 @@ import SingleSignOn from 'eve-sso'
 
 const { name, version, homepage } = require('../package')
 
-export type Response<T> = PassThrough & {
+export interface Response<T> extends PassThrough {
     statusCode: number
     statusMessage: string
     headers: {
