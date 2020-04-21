@@ -40,27 +40,12 @@ export default class MemoryProvider implements Provider {
       scopes = scopes.split(' ')
     }
 
-    const inputScopes = scopes.concat().sort()
     for (const token of tokens) {
       if ((!scopes || !scopes.length) && (!token.scopes || !token.scopes.length)) {
         return token
       }
 
-      if (inputScopes.length !== token.scopes.length) {
-        continue
-      }
-
-      let isSame = true
-      const tokenScopes = token.scopes.concat().sort()
-
-      for (let i = 0; i < inputScopes.length; i++) {
-        if (inputScopes[i] !== tokenScopes[i]) {
-          isSame = false
-          break
-        }
-      }
-
-      if (isSame) {
+      if (scopes.every(scope => token.scopes.includes(scope))) {
         return token
       }
     }
