@@ -25,6 +25,8 @@ npm i eve-esi-client [--save]
 ## Example
 
 This example shows how to authenticate a character and make a request.
+See the [MongoDB provider](https://github.com/MichielvdVelde/eve-esi-client-mongo-provider)
+for a more robust provider.
 
 The accompanied memory provider is meant solely for development, you should not
 use it in production. It can also be used as a reference implementation.
