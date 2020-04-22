@@ -19,7 +19,9 @@ export interface Response<T> extends PassThrough {
 }
 
 export interface Account {
-  owner: string
+  owner: string,
+
+  deleteAccount (): Promise<void>
 }
 
 export interface Character {
@@ -32,7 +34,8 @@ export interface Character {
     characterName: string
   ): Promise<this>,
 
-  deleteTokens (): Promise<void>
+  deleteTokens (): Promise<void>,
+  deleteCharacter (): Promise<void>
 }
 
 export interface Token {
@@ -47,7 +50,9 @@ export interface Token {
     refreshToken: string,
     expires: Date,
     scopes?: string | string[]
-  ): Promise<this>
+  ): Promise<this>,
+
+  deleteToken (): Promise<void>
 }
 
 export interface Provider<
@@ -60,7 +65,11 @@ export interface Provider<
 
   createAccount (owner: string): Promise<A>,
   createCharacter (owner: string, characterId: number, characterName: string): Promise<C>
-  createToken (characterId: number, accessToken: string, refreshToken: string, expires: Date, scopes?: string | string[]): Promise<T>
+  createToken (characterId: number, accessToken: string, refreshToken: string, expires: Date, scopes?: string | string[]): Promise<T>,
+
+  deleteAccount (owner: string): Promise<void>,
+  deleteCharacter (characterId: number): Promise<void>,
+  deleteToken (accessToken: string): Promise<void>
 }
 
 export interface Options {

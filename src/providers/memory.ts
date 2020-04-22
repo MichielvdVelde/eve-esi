@@ -54,7 +54,14 @@ export default class MemoryProvider implements Provider {
   public async createAccount (
     owner: string
   ) {
-    const account = { owner }
+    const account: any = {
+      owner
+    }
+
+    account.deleteAccount = async () => {
+      this.accounts.delete(owner)
+    }
+
     this.accounts.set(owner, account)
     return account
   }
@@ -81,6 +88,10 @@ export default class MemoryProvider implements Provider {
 
     character.deleteTokens = async () => {
       this.tokens.delete(character.characterId)
+    }
+
+    character.deleteCharacter = async () => {
+      this.characters.delete(characterId)
     }
 
     this.characters.set(characterId, character)
@@ -133,6 +144,23 @@ export default class MemoryProvider implements Provider {
       return token
     }
 
+    token.deleteToken = async () => {
+      for (const character of this.characters.values()) {
+        const tokens = this.tokens.get(character.characterId)
+
+        if (!tokens || !tokens.length) {
+          continue
+        }
+
+        for (let i = 0; i < tokens.length; i++) {
+          if (tokens[i].accessToken === accessToken) {
+            tokens.splice(i)
+            return
+          }
+        }
+      }
+    }
+
     if (!this.tokens.get(characterId)) {
       this.tokens.set(characterId, [])
     }
@@ -140,5 +168,41 @@ export default class MemoryProvider implements Provider {
     this.tokens.get(characterId).push(token)
 
     return token
+  }
+
+  public async deleteAccount (
+    owner: string
+  ) {
+    this.accounts.delete(owner)
+  }
+
+  public async deleteCharacter (
+    characterId: number
+  ) {
+    this.characters.delete(characterId)
+    this.tokens.delete(characterId)
+  }
+
+  public async deleteToken (
+    accessToken: string
+  ) {
+    if (!this.characters.size) {
+      return
+    }
+
+    for (const character of this.characters.values()) {
+      const tokens = this.tokens.get(character.characterId)
+
+      if (!tokens || !tokens.length) {
+        continue
+      }
+
+      for (let i = 0; i < tokens.length; i++) {
+        if (tokens[i].accessToken === accessToken) {
+          await tokens[i].deleteToken()
+          return
+        }
+      }
+    }
   }
 }
