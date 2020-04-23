@@ -82,18 +82,18 @@ router.get('/welcome/:characterId', async ctx => {
 
   let body = `<h1>Welcome, ${character.characterName}!</h1>`
 
-  const skills = await esi.request<Skills>(
+  const response = await esi.request<Skills>(
     `/characters/${characterId}/skills/`,
     null,
     null,
     { token }
   )
 
-  const json = await skills.json()
+  const skills = await response.json()
 
-  body += `<p>You have ${json.total_sp} total skill points.</p><ul>`
+  body += `<p>You have ${skills.total_sp} total skill points.</p><ul>`
 
-  for (const skill of json.skills) {
+  for (const skill of skills.skills) {
     body += `<li>${skill.skill_id}: ${skill.active_skill_level}</li>`
   }
   
