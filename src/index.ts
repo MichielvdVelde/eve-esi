@@ -21,7 +21,8 @@ export interface Response<T> extends PassThrough {
 export interface Account {
   owner: string,
 
-  deleteAccount (): Promise<void>
+  deleteAccount (): Promise<void>,
+  deleteCharacters (): Promise<void>
 }
 
 export interface Character {

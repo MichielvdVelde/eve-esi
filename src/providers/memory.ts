@@ -62,6 +62,14 @@ export default class MemoryProvider implements Provider {
       this.accounts.delete(owner)
     }
 
+    account.deleteCharacters = async () => {
+      for (const [ characterId, character ] of this.characters) {
+        if (character.owner = owner) {
+          this.characters.delete(characterId)
+        }
+      }
+    }
+
     this.accounts.set(owner, account)
     return account
   }
