@@ -186,7 +186,7 @@ export default class ESI {
   public async request<T = { [key: string]: any }> (
     uri: string,
     query?: { [key: string]: any },
-    payload?: { [key: string]: any },
+    body?: { [key: string]: any },
     options: {
       method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
       statusCodes?: number[],
@@ -195,7 +195,7 @@ export default class ESI {
       sso?: SingleSignOn
     } = {}
   ): Promise<Response<T>> {
-    const method = options.method || payload ? 'POST' : 'GET'
+    const method = options.method || body ? 'POST' : 'GET'
     // TODO: add default acceptable status codes for GET and POST/PUT requests
     const statusCodes = options.statusCodes || method === 'GET' ? [ 200 ] : [ 200, 201 ]
     let headers = options.headers || {}
@@ -218,10 +218,10 @@ export default class ESI {
       headers['Authorization'] = `Bearer ${token.accessToken}`
     }
 
-    let encodedPayload: string = null
+    let encodedBody: string = null
 
-    if (payload) {
-      encodedPayload = formUrlencoded(payload)
+    if (body) {
+      encodedBody = formUrlencoded(body)
 
       headers['Content-Type'] = 'application/x-www-form-urlencoded'
     }
@@ -238,6 +238,6 @@ export default class ESI {
       ...statusCodes
     )
 
-    return <any>request(uriWithQuery || uri, encodedPayload, headers)
+    return <any>request(uriWithQuery || uri, encodedBody, headers)
   }
 }
