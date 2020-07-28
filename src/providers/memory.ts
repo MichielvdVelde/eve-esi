@@ -64,7 +64,7 @@ export default class MemoryProvider implements Provider {
 
     account.deleteCharacters = async () => {
       for (const [ characterId, character ] of this.characters) {
-        if (character.owner = owner) {
+        if (character.owner === owner) {
           this.characters.delete(characterId)
         }
       }
@@ -153,18 +153,16 @@ export default class MemoryProvider implements Provider {
     }
 
     token.deleteToken = async () => {
-      for (const character of this.characters.values()) {
-        const tokens = this.tokens.get(character.characterId)
+      const tokens = this.tokens.get(token.characterId)
 
-        if (!tokens || !tokens.length) {
-          continue
-        }
+      if (!tokens || !tokens.length) {
+        return
+      }
 
-        for (let i = 0; i < tokens.length; i++) {
-          if (tokens[i].accessToken === accessToken) {
-            tokens.splice(i)
-            return
-          }
+      for (let i = 0; i < tokens.length; i++) {
+        if (tokens[i].accessToken === accessToken) {
+          tokens.splice(i)
+          return
         }
       }
     }
