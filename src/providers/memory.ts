@@ -91,7 +91,6 @@ export default class MemoryProvider implements Provider {
     ) => {
       character.owner = owner
       character.characterName = characterName
-      return character
     }
 
     character.deleteTokens = async () => {
@@ -148,8 +147,6 @@ export default class MemoryProvider implements Provider {
       token.refreshToken = refreshToken
       token.expires = expires
       token.scopes = scopes
-
-      return token
     }
 
     token.deleteToken = async () => {
@@ -172,7 +169,6 @@ export default class MemoryProvider implements Provider {
     }
 
     this.tokens.get(characterId).push(token)
-
     return token
   }
 
