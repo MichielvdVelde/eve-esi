@@ -33,7 +33,7 @@ export interface Character {
   updateCharacter (
     owner: string,
     characterName: string
-  ): Promise<this>,
+  ): Promise<void>,
 
   deleteTokens (): Promise<void>,
   deleteCharacter (): Promise<void>
@@ -51,7 +51,7 @@ export interface Token {
     refreshToken: string,
     expires: Date,
     scopes?: string | string[]
-  ): Promise<this>,
+  ): Promise<void>,
 
   deleteToken (): Promise<void>
 }
