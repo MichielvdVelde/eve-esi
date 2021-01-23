@@ -3,7 +3,6 @@
 Node.js client for Eve Online ESI. Allows you to manage characters and tokens,
 and make authenticated and unauthenticated requests.
 This module makes use of my other Eve related module, [eve-sso](https://github.com/MichielvdVelde/eve-sso).
-Documentation is lacking, see the source code for guidance if you're brave enough to try it out.
 
 Before using the module you must create an application in the
 [Eve Online developers section](https://developers.eveonline.com/). This will
