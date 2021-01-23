@@ -36,7 +36,7 @@ public async register (
 /*
  Make a request to ESI
 */
-public async request<T = { [key: string]: any }> (
+public async request<T = any> (
   uri: string,
   query?: { [key: string]: any },
   body?: { [key: string]: any },
