@@ -183,7 +183,7 @@ export default class ESI {
     }
   }
 
-  public async request<T = { [key: string]: any }> (
+  public async request<T = any> (
     uri: string,
     query?: { [key: string]: any },
     body?: { [key: string]: any },
