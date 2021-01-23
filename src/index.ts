@@ -196,7 +196,6 @@ export default class ESI {
     } = {}
   ): Promise<Response<T>> {
     const method = options.method || body ? 'POST' : 'GET'
-    // TODO: add default acceptable status codes for GET and POST/PUT requests
     const statusCodes = options.statusCodes || method === 'GET' ? [ 200 ] : [ 200, 201 ]
     let headers = options.headers || {}
 
