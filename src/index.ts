@@ -114,19 +114,17 @@ export default class ESI {
 
   public getRedirectUrl (
     state: string,
-    scopes?: string | string[],
-    sso?: SingleSignOn
+    scopes?: string | string[]
   ) {
-    return (sso || this.sso).getRedirectUrl(state, scopes)
+    return this.sso.getRedirectUrl(state, scopes)
   }
 
   public async register (
     code: string,
     isRefreshToken?: boolean,
-    scopes?: string | string[],
-    sso?: SingleSignOn
+    scopes?: string | string[]
   ) {
-    const response = await (sso || this.sso).getAccessToken(code, isRefreshToken, scopes)
+    const response = await this.sso.getAccessToken(code, isRefreshToken, scopes)
 
     const { provider } = this
     const { access_token, refresh_token, decoded_access_token, expires_in } = response
@@ -191,8 +189,7 @@ export default class ESI {
       method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
       statusCodes?: number[],
       headers?: { [key: string]: any }
-      token?: Token,
-      sso?: SingleSignOn
+      token?: Token
     } = {}
   ): Promise<Response<T>> {
     const method = options.method || body ? 'POST' : 'GET'
@@ -205,7 +202,7 @@ export default class ESI {
       const { token } = options
 
       if (token.expires.getTime() <= Date.now()) {
-        const response = await (options.sso || this.sso).getAccessToken(token.refreshToken, true)
+        const response = await this.sso.getAccessToken(token.refreshToken, true)
 
         await token.updateToken(
           response.access_token,
