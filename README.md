@@ -2,7 +2,6 @@
 
 Node.js client for Eve Online ESI. Allows you to manage characters and tokens,
 and make authenticated and unauthenticated requests.
-
 This module makes use of my other Eve related module, [eve-sso](https://github.com/MichielvdVelde/eve-sso).
 Documentation is lacking, see the source code for guidance if you're brave enough to try it out.
 
@@ -10,26 +9,31 @@ Before using the module you must create an application in the
 [Eve Online developers section](https://developers.eveonline.com/). This will
 give you the required client ID and secret.
 
-## Install
-
-```
-npm i eve-esi-client [--save]
-```
-
 ## Features
 
 * Manage accounts, characters, and tokens with an easy to extend interface
 * Make authenticated and unauthenticated requests to ESI
 * Automatically refreshes and updates tokens when necessary
 
+## Install
+
+```
+npm i eve-esi-client [--save]
+```
+
+## Documentation
+
+[Click here to view the documentation](https://michielvdvelde.github.io/eve-esi/).
+
 ## Example
 
 This example shows how to authenticate a character and make a request.
-See the [MongoDB provider](https://github.com/MichielvdVelde/eve-esi-client-mongo-provider)
-for a more robust provider.
 
 The accompanied memory provider is meant solely for development, you should not
 use it in production. It can also be used as a reference implementation.
+
+See the [MongoDB provider](https://github.com/MichielvdVelde/eve-esi-client-mongo-provider)
+for a more robust provider.
 
 ```ts
 'use strict'
