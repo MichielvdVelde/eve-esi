@@ -11,7 +11,6 @@ const esi = new ESI({
   clientId?: string,
   secretKey?: string,
   callbackUri?: string,
-  scopes?: string | string[],
   endpoint?: string,
 })
 
@@ -31,11 +30,11 @@ public async register (
   code: string,
   isRefreshToken?: boolean,
   scopes?: string | string[]
-): {
+): Promise<{
   account: Account,
   character: Character,
   token: Token
-}
+}>
 
 /*
  Make a request to ESI
