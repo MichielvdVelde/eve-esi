@@ -27,8 +27,7 @@ public getRedirectUrl (
 */
 public async register (
   code: string,
-  isRefreshToken?: boolean,
-  scopes?: string | string[]
+  isRefreshToken?: boolean
 ): Promise<{
   account: Account,
   character: Character,
