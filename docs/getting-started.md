@@ -9,7 +9,11 @@ npm i eve-esi-client [--save]
 ```
 
 The module requires [eve-sso](https://github.com/MichielvdVelde/eve-sso)
-as a peer dependency, meaning you will need to install it yourself.
+as a peer dependency, meaning you will need to install it yourself:
+
+```
+npm i eve-sso [--save]
+```
 
 ## Create an Application
 
@@ -117,15 +121,22 @@ interface Skills {
 }
 
 router.get('/skills/:characterId', async ctx => {
+    const characterId = Number(ctx.params.characterId)
+
     const token = await provider.getToken(
-        Number(ctx.params.characterId),
+        characterId,
         'esi-skills.read_skills.v1'
     )
+
+    if (!token) {
+        ctx.body = '<strong>No token found</strong>'
+        return
+    }
 
     // Make the request
     const response = await esi.request<Skills>(
         // request uri
-        `/characters/${character.characterId}/skills/`,
+        `/characters/${characterId}/skills/`,
         // request query
         null,
         // request body
