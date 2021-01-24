@@ -75,13 +75,11 @@ export interface Provider<
 
 export interface Options {
   provider: Provider,
-  userAgent?: string
-  sso?: SingleSignOn,
+  userAgent?: string,
   clientId?: string,
   secretKey?: string,
   callbackUri?: string,
-  scopes?: string | string[],
-  endpoint?: string,
+  endpoint?: string
 }
 
 export default class ESI {
@@ -92,18 +90,13 @@ export default class ESI {
   public readonly provider: Provider
 
   public constructor (options: Options) {
-    if (!options.sso && (!options.clientId || !options.secretKey || !options.callbackUri)) {
-      throw new TypeError('sso or clientId, secretKey, and callbackUri needs to be set')
-    }
+    this.userAgent = options.userAgent ?? `${name}@${version} - ${homepage}`
 
-    this.userAgent = options.userAgent || options.sso ? options.sso.userAgent : `${name}@${version} - ${homepage}`
-
-    this.sso = options.sso || new SingleSignOn(
+    this.sso = new SingleSignOn(
       options.clientId,
       options.secretKey,
       options.callbackUri,
       {
-        scopes: options.scopes,
         userAgent: this.userAgent
       }
     )
