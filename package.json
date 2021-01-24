@@ -1,6 +1,6 @@
 {
   "name": "eve-esi-client",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Client for Eve Online ESI",
   "main": "./dist/index.js",
   "author": "Michiel van der Velde <michiel@michielvdvelde.nl>",
