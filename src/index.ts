@@ -114,10 +114,9 @@ export default class ESI {
 
   public async register (
     code: string,
-    isRefreshToken?: boolean,
-    scopes?: string | string[]
+    isRefreshToken?: boolean
   ) {
-    const response = await this.sso.getAccessToken(code, isRefreshToken, scopes)
+    const response = await this.sso.getAccessToken(code, isRefreshToken)
 
     const { provider } = this
     const { access_token, refresh_token, decoded_access_token, expires_in } = response
