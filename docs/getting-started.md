@@ -30,6 +30,8 @@ To instantiate a client you also need a `Provider`. The
 provider is responsible for managing accounts, characters,
 and tokens. The example below uses the built-in `MemoryProvider`.
 
+An example of a provider is the [MongoDB Provider](https://github.com/MichielvdVelde/eve-esi-client-mongo-provider).
+
 ```typescript
 import ESI from 'eve-esi-client'
 import MemoryProvider from 'eve-esi-client/dist/providers/memory'
@@ -67,7 +69,7 @@ router.get('/', async ctx => {
     // Create a redirect url for the given state and scope(s)
     const redirectUrl = esi.getRedirectUrl(
         'some-state',
-        [ 'scope1', 'scope2' ]
+        [ 'esi-skills.read_skills.v1' ]
     )
 
     // Show the link to the user
@@ -114,20 +116,27 @@ interface Skills {
   unallocated_sp: number
 }
 
-// Make the request
-const response = await esi.request<Skills>(
-    // request uri
-    `/characters/${character.characterId}/skills/`,
-    // request query
-    null,
-    // request body
-    null,
-    // request options
-    { token }
-)
+router.get('/skills/:characterId', async ctx => {
+    const token = await provider.getToken(
+        Number(ctx.params.characterId),
+        'esi-skills.read_skills.v1'
+    )
 
-// Get the body
-const body = await response.json()
+    // Make the request
+    const response = await esi.request<Skills>(
+        // request uri
+        `/characters/${character.characterId}/skills/`,
+        // request query
+        null,
+        // request body
+        null,
+        // request options
+        { token }
+    )
 
-console.log(`You have ${body.total_sp} skill points.`)
+    // Get the body
+    const body = await response.json()
+
+    ctx.body = `You have ${body.total_sp} skill points.`
+})
 ```
