@@ -6,12 +6,11 @@
 */
 const esi = new ESI({
   provider: Provider,
-  userAgent?: string
-  sso?: SingleSignOn,
+  userAgent?: string,
   clientId?: string,
   secretKey?: string,
   callbackUri?: string,
-  endpoint?: string,
+  endpoint?: string
 })
 
 /*
