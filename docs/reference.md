@@ -6,10 +6,10 @@
 */
 const esi = new ESI({
   provider: Provider,
+  clientId: string,
+  secretKey: string,
+  callbackUri: string,
   userAgent?: string,
-  clientId?: string,
-  secretKey?: string,
-  callbackUri?: string,
   endpoint?: string
 })
 
