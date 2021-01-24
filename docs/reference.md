@@ -21,7 +21,7 @@ const esi = new ESI({
 public getRedirectUrl (
   state: string,
   scopes?: string | string[]
-)
+): string
 
 /*
  Register an authentication or refresh token
@@ -31,7 +31,11 @@ public async register (
   code: string,
   isRefreshToken?: boolean,
   scopes?: string | string[]
-)
+): {
+  account: Account,
+  character: Character,
+  token: Token
+}
 
 /*
  Make a request to ESI
@@ -46,5 +50,5 @@ public async request<T = any> (
     headers?: { [key: string]: any }
     token?: Token
   } = {}
-)
+): Promise<Response<T>>
 ```

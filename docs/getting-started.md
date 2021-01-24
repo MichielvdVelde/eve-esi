@@ -19,9 +19,16 @@ at the Eve Online Developers section.
 * [Go to the Eve Online Developers section](https://developers.eveonline.com/)
 
 After you have created a new application you receive the client ID
-and secret, which you'll need later.
+and secret.
 
 ## Set up ESI
+
+The example below shows how to create a client instance
+using the client ID, secret, and callback URI.
+
+To instantiate a client you also need a `Provider`. The
+provider is responsible for managing accounts, characters,
+and tokens. The example below uses the built-in `MemoryProvider`.
 
 ```typescript
 import ESI from 'eve-esi-client'
@@ -40,10 +47,12 @@ const esi = new ESI({
 
 The redirect url requires a `state`, which you may
 use in the callback to verify the request, or use it
-as a temporary session store.
+as a temporary session store key.
 
 The redirect url also defines which scopes, if any,
-are requested.
+are requested. To find out which scopes you will need
+for your application you can check out the
+[Eve Swagger UI](https://esi.evetech.net/ui).
 
 In the below example we use a `koa` router.
 
@@ -83,6 +92,8 @@ router.get('/callback', async ctx => {
         character,
         token
     } = await esi.register(code)
+
+    ctx.body = `<h1>Welcome, ${character.characterName}!</h1>`
 })
 ```
 
@@ -105,12 +116,18 @@ interface Skills {
 
 // Make the request
 const response = await esi.request<Skills>(
+    // request uri
     `/characters/${character.characterId}/skills/`,
+    // request query
     null,
+    // request body
     null,
+    // request options
     { token }
 )
 
 // Get the body
 const body = await response.json()
+
+console.log(`You have ${body.total_sp} skill points.`)
 ```
