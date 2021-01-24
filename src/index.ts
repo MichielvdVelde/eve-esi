@@ -75,10 +75,10 @@ export interface Provider<
 
 export interface Options {
   provider: Provider,
+  clientId: string,
+  secretKey: string,
+  callbackUri: string,
   userAgent?: string,
-  clientId?: string,
-  secretKey?: string,
-  callbackUri?: string,
   endpoint?: string
 }
 
@@ -91,6 +91,8 @@ export default class ESI {
 
   public constructor (options: Options) {
     this.userAgent = options.userAgent ?? `${name}@${version} - ${homepage}`
+    this.endpoint = options.endpoint || 'https://esi.evetech.net/latest'
+    this.provider = options.provider
 
     this.sso = new SingleSignOn(
       options.clientId,
@@ -100,9 +102,6 @@ export default class ESI {
         userAgent: this.userAgent
       }
     )
-
-    this.endpoint = options.endpoint || 'https://esi.evetech.net/latest'
-    this.provider = options.provider
   }
 
   public getRedirectUrl (
