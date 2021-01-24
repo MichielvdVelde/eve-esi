@@ -221,12 +221,14 @@ export default class ESI {
       uriWithQuery = `${uri}?${stringify(query)}`
     }
 
-    const request = bent(
+    return <any>bent(
       this.endpoint,
       method,
       ...statusCodes
+    )(
+      uriWithQuery ?? uri,
+      encodedBody,
+      headers
     )
-
-    return <any>request(uriWithQuery || uri, encodedBody, headers)
   }
 }
