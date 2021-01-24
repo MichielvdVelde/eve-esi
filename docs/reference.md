@@ -22,7 +22,7 @@ public getRedirectUrl (
 ): string
 
 /*
- Register an authentication or refresh token
+ Register a one-time access code
 */
 public async register (
   code: string
