@@ -91,7 +91,7 @@ export default class ESI {
 
   public constructor (options: Options) {
     this.userAgent = options.userAgent ?? `${name}@${version} - ${homepage}`
-    this.endpoint = options.endpoint || 'https://esi.evetech.net/latest'
+    this.endpoint = options.endpoint ?? 'https://esi.evetech.net/latest'
     this.provider = options.provider
 
     this.sso = new SingleSignOn(
@@ -182,9 +182,9 @@ export default class ESI {
       token?: Token
     } = {}
   ): Promise<Response<T>> {
-    const method = options.method || body ? 'POST' : 'GET'
+    const method = options.method ?? body ? 'POST' : 'GET'
     const statusCodes = options.statusCodes || method === 'GET' ? [ 200 ] : [ 200, 201 ]
-    let headers = options.headers || {}
+    const headers = options.headers ?? {}
 
     headers['User-Agent'] = this.userAgent
 
