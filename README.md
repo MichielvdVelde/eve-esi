@@ -12,7 +12,10 @@ give you the required client ID and secret.
 
 * Manage accounts, characters, and tokens with an easy to extend interface
 * Make authenticated and unauthenticated requests to ESI
-* Automatically refreshes and updates tokens when necessary
+* Automatically refreshes and updates tokens when 
+
+> I accept donations in ISK. If you want to donate, send your ISK to
+> `Dakara Chart` in Eve Online
 
 ## Install
 
