@@ -19,33 +19,48 @@ export interface Response<T> extends PassThrough {
 }
 
 export interface Account {
+  /** The owner of the account. */
   owner: string,
 
+  /** Delete the account. */
   deleteAccount (): Promise<void>,
+  /** Delete all characters belonging to this account. */
   deleteCharacters (): Promise<void>
 }
 
 export interface Character {
+  /** The character owner. */
   owner: string,
+  /** The character ID */
   characterId: number,
+  /** The character name */
   characterName: string,
 
+  /** Update the character. */
   updateCharacter (
     owner: string,
     characterName: string
   ): Promise<void>,
 
+  /** Delete all tokens belonging to this character. */
   deleteTokens (): Promise<void>,
+  /** Delete the character. */
   deleteCharacter (): Promise<void>
 }
 
 export interface Token {
+  /** The character ID this token belongs to. */
   characterId: number,
+  /** The access token. */
   accessToken: string,
+  /** The refresh token. */
   refreshToken: string,
+  /** The expiry date. */
   expires: Date,
+  /** The scopes, if any */
   scopes?: string[],
 
+  /** Update the token. */
   updateToken (
     accessToken: string,
     refreshToken: string,
@@ -53,23 +68,34 @@ export interface Token {
     scopes?: string | string[]
   ): Promise<void>,
 
+  /** Delete the token */
   deleteToken (): Promise<void>
 }
 
 export interface Provider<
   A extends Account = Account,
   C extends Character = Character,
-  T extends Token = Token> {
+  T extends Token = Token
+> {
+  /** Get the account belonging to this owner. */
   getAccount (owner: string, onLogin?: boolean): Promise<A>,
+  /** Get the character belonging to this ID. */
   getCharacter (characterId: number, onLogin?: boolean): Promise<C>,
+  /** Get a token for the character and scopes combination */
   getToken (characterId: number, scopes?: string | string[]): Promise<T>,
 
+  /** Create a new account for this owner. */
   createAccount (owner: string): Promise<A>,
-  createCharacter (owner: string, characterId: number, characterName: string): Promise<C>
+  /** Create a new character for this owner. */
+  createCharacter (owner: string, characterId: number, characterName: string): Promise<C>,
+  /** Create a new token for this character. */
   createToken (characterId: number, accessToken: string, refreshToken: string, expires: Date, scopes?: string | string[]): Promise<T>,
 
+  /** Delete the account belonging to this owner. */
   deleteAccount (owner: string): Promise<void>,
+  /** Delete the character with this ID. */
   deleteCharacter (characterId: number): Promise<void>,
+  /** Delete the token with this access token. */
   deleteToken (accessToken: string): Promise<void>
 }
 
@@ -136,10 +162,6 @@ export default class ESI {
         name
       )
     } else if (character.owner !== account.owner || character.characterName !== name) {
-      if (character.owner !== account.owner) {
-        await character.deleteTokens()
-      }
-
       await character.updateCharacter(
         owner,
         name
