@@ -41,7 +41,7 @@ export default class MemoryProvider implements Provider {
     }
 
     for (const token of tokens) {
-      if ((!scopes || !scopes.length) && (!token.scopes || !token.scopes.length)) {
+      if (!scopes || !scopes.length) {
         return token
       }
 
@@ -98,6 +98,7 @@ export default class MemoryProvider implements Provider {
     }
 
     character.deleteCharacter = async () => {
+      this.tokens.delete(character.characterId)
       this.characters.delete(characterId)
     }
 
