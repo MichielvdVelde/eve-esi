@@ -3,7 +3,6 @@
 import { stringify } from 'querystring'
 import { PassThrough } from 'stream'
 
-import formUrlencoded from 'form-urlencoded'
 import bent from 'bent'
 import SingleSignOn from 'eve-sso'
 
@@ -195,12 +194,12 @@ export default class ESI {
 
   public async request<T = any> (
     uri: string,
-    query?: { [key: string]: any },
-    body?: { [key: string]: any },
+    query?: Record<string, any>,
+    body?: Record<string, any> | any[],
     options: {
       method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
       statusCodes?: number[],
-      headers?: { [key: string]: any }
+      headers?: Record<string, any>,
       token?: Token
     } = {}
   ): Promise<Response<T>> {
@@ -226,12 +225,8 @@ export default class ESI {
       headers['Authorization'] = `Bearer ${token.accessToken}`
     }
 
-    let encodedBody: string = null
-
     if (body) {
-      encodedBody = formUrlencoded(body)
-
-      headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      headers['Content-Type'] = 'application/json'
     }
 
     let uriWithQuery: string = null
@@ -246,7 +241,7 @@ export default class ESI {
       ...statusCodes
     )(
       uriWithQuery ?? uri,
-      encodedBody,
+      body ? JSON.stringify(body) : undefined,
       headers
     )
   }
