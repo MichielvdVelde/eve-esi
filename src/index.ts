@@ -225,8 +225,15 @@ export default class ESI {
       headers['Authorization'] = `Bearer ${token.accessToken}`
     }
 
+    let encodedBody: string
+
     if (body) {
-      headers['Content-Type'] = 'application/json'
+      try {
+        encodedBody = JSON.stringify(body)
+        headers['Content-Type'] = 'application/json'
+      } catch (e) {
+        throw new TypeError('Failed to serialize body')
+      }
     }
 
     let uriWithQuery: string = null
@@ -241,7 +248,7 @@ export default class ESI {
       ...statusCodes
     )(
       uriWithQuery ?? uri,
-      body ? JSON.stringify(body) : undefined,
+      encodedBody,
       headers
     )
   }
